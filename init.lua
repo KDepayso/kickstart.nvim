@@ -255,6 +255,10 @@ require('lazy').setup({
   --
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
+  --
+  { 'mfussenegger/nvim-jdtls' },
+
+  { 'nvim-tree/nvim-tree.lua', opts = {} },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
@@ -436,6 +440,9 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+
+      -- NvimTree
+      vim.keymap.set('n', '<leader>n', ':NvimTreeOpen<CR>', { desc = '[][N]vimTree Open' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -626,6 +633,14 @@ require('lazy').setup({
         end,
       })
 
+      -- Jdtls Config
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'java',
+        callback = function(args)
+          require('custom.jdtls.jdtls_setup').setup()
+        end,
+      })
+
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
       vim.diagnostic.config {
@@ -731,6 +746,11 @@ require('lazy').setup({
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
+        },
+        automatic_enable = {
+          exclude = {
+            'jdtls',
+          },
         },
       }
     end,
