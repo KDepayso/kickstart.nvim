@@ -69,6 +69,16 @@ function M:setup()
       bundles = {},
     },
   }
+  local bundles = {
+    vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
+  }
+
+  vim.list_extend(bundles, vim.split(vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-test/extension/server/*jar', 1), '\n'))
+
+  config['init_options'] = {
+    bundles = bundles,
+  }
+
   -- This starts a new client & server,
   -- or attaches to an existing client & server depending on the `root_dir`.
   require('jdtls').start_or_attach(config)
