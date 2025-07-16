@@ -91,7 +91,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
@@ -257,7 +257,37 @@ require('lazy').setup({
   --
   --
   { 'mfussenegger/nvim-jdtls' },
-  { 'rcarriga/nvim-dap-ui', dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' } },
+  {
+    'mfussenegger/nvim-dap',
+    config = function()
+      local dap = require 'dap'
+      local dapui = require 'dapui'
+
+      dapui.setup()
+
+      dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+      end
+    end,
+  },
+  { 'nvim-neotest/nvim-nio' },
+  {
+    'rcarriga/nvim-dap-ui',
+    config = function()
+      require('lazydev').setup {
+        library = { 'nvim-dap-ui' },
+      }
+    end,
+  },
   { 'nvim-tree/nvim-tree.lua', opts = {
     view = { adaptive_size = true },
   } },
