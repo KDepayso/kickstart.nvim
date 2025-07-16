@@ -40,6 +40,7 @@ function M:setup()
       'java.base/java.util=ALL-UNNAMED',
       '--add-opens',
       'java.base/java.lang=ALL-UNNAMED',
+      '-javaagent:C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/jdtls/lombok.jar',
 
       -- 💀
       '-jar',

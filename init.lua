@@ -258,7 +258,9 @@ require('lazy').setup({
   --
   { 'mfussenegger/nvim-jdtls' },
   { 'rcarriga/nvim-dap-ui', dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' } },
-  { 'nvim-tree/nvim-tree.lua', opts = {} },
+  { 'nvim-tree/nvim-tree.lua', opts = {
+    view = { adaptive_size = true },
+  } },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
