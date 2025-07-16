@@ -3,6 +3,24 @@ function M:setup()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
   local workspace_dir = 'C:/Dev/jdtls-data/' .. project_name
 
+  local bundles = {
+    vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
+  }
+  vim.list_extend(bundles, vim.split(vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-test/extension/server/*.jar', 1), '\n'))
+
+  local ignored_bundles = { 'com.microsoft.java.test.runner-jar-with-dependencies.jar', 'jacocoagent.jar' }
+  local find = string.find
+  local function should_ignore_bundle(bundle)
+    for _, ignored in ipairs(ignored_bundles) do
+      if find(bundle, ignored, 1, true) then
+        return true
+      end
+    end
+  end
+  bundles = vim.tbl_filter(function(bundle)
+    return bundle ~= '' and not should_ignore_bundle(bundle)
+  end, bundles)
+
   local config = {
     -- The command that starts the language server
     -- See: https://github.com/eclipse/eclipse.jdt.ls#running-from-the-command-line
@@ -66,17 +84,8 @@ function M:setup()
     --
     -- If you don't plan on using the debugger or other eclipse.jdt.ls plugins you can remove this
     init_options = {
-      bundles = {},
+      bundles = bundles,
     },
-  }
-  local bundles = {
-    vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
-  }
-
-  vim.list_extend(bundles, vim.split(vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-test/extension/server/*jar', 1), '\n'))
-
-  config['init_options'] = {
-    bundles = bundles,
   }
 
   -- This starts a new client & server,
