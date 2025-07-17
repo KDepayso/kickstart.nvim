@@ -476,6 +476,15 @@ require('lazy').setup({
       -- NvimTree
       vim.keymap.set('n', '<leader>n', ':NvimTreeOpen<CR>', { desc = '[][N]vimTree Open' })
 
+      -- Nvim-Dap
+      vim.keymap.set('n', '<leader>dt', ':DapToggleBreakpoint<CR>', { desc = '[D]ebug [T]oggle Breakpoint' })
+      vim.keymap.set('n', '<leader>dn', ':DapNew<CR>', { desc = '[D]ebug [N]ew' })
+      vim.keymap.set('n', '<leader>dc', ':DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
+      vim.keymap.set('n', '<leader>dm', ':lua require"dapui".toggle()<CR>', { desc = '[D]ebug [M]enu' })
+      vim.keymap.set('n', '<leader>d<Up>', ':DapStepInto<CR>', { desc = '[D]ebug [Up] Step Into' })
+      vim.keymap.set('n', '<leader>d<Right>', ':DapStepOver<CR>', { desc = '[D]ebug [Right] Step Over' })
+      vim.keymap.set('n', '<leader>d<Down>', ':DapStepOut<CR>', { desc = '[D]ebug [Down] Step Out' })
+
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
         -- You can pass additional configuration to Telescope to change the theme, layout, etc.
