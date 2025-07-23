@@ -730,6 +730,7 @@ require('lazy').setup({
             return diagnostic_message[diagnostic.severity]
           end,
         },
+        sql,
       }
 
       -- LSP servers and clients are able to communicate to each other what features they support.
@@ -889,6 +890,18 @@ require('lazy').setup({
           -- },
         },
         opts = {},
+        opts = {
+          sources = {
+            default = { 'lsp', 'path', 'snippets', 'buffer' },
+            per_filetype = {
+              sql = { 'snippets', 'dadbod', 'buffer' },
+            },
+            -- add vim-dadbod-completion to your completion providers
+            providers = {
+              dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },
+            },
+          },
+        },
       },
       'folke/lazydev.nvim',
     },
