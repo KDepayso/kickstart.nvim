@@ -292,6 +292,25 @@ require('lazy').setup({
     view = { adaptive_size = true },
   } },
 
+  { 'tpope/vim-dadbod' },
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      { 'tpope/vim-dadbod', lazy = true },
+      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true }, -- Optional
+    },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  },
+
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
   --    {
@@ -478,9 +497,11 @@ require('lazy').setup({
 
       -- Nvim-Dap
       vim.keymap.set('n', '<leader>dt', ':DapToggleBreakpoint<CR>', { desc = '[D]ebug [T]oggle Breakpoint' })
+      vim.keymap.set('n', '<leader>dp', ':DapClearBreakpoints<CR>', { desc = '[D]ebug Clear Break[P]oints' })
       vim.keymap.set('n', '<leader>dn', ':DapNew<CR>', { desc = '[D]ebug [N]ew' })
       vim.keymap.set('n', '<leader>dc', ':DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
       vim.keymap.set('n', '<leader>dm', ':lua require"dapui".toggle()<CR>', { desc = '[D]ebug [M]enu' })
+      vim.keymap.set('n', '<leader>dq', ':DapTerminate<CR>', { desc = '[D]ebug Qui[T]' })
       vim.keymap.set('n', '<leader>d<Up>', ':DapStepInto<CR>', { desc = '[D]ebug [Up] Step Into' })
       vim.keymap.set('n', '<leader>d<Right>', ':DapStepOver<CR>', { desc = '[D]ebug [Right] Step Over' })
       vim.keymap.set('n', '<leader>d<Down>', ':DapStepOut<CR>', { desc = '[D]ebug [Down] Step Out' })
