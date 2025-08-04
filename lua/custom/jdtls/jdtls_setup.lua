@@ -1,7 +1,7 @@
 local M = {}
 function M:setup()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-  local workspace_dir = 'C:/Dev/jdtls-data/' .. project_name
+  local workspace_dir = '/home/kdepayso/Documents/Java/jdtls-data/' .. project_name
 
   local bundles = {
     vim.fn.glob('/home/kdepayso/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
