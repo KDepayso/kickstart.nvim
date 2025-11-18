@@ -1,94 +1,23 @@
---[[
+if vim.g.neovide then
+  vim.g.neovide_scroll_animation_length = 0
+  vim.g.neovide_position_animation_length = 0
+  vim.g.neovide_vfx_mode = ''
+  vim.g.neovide_cursor_animation_length = 0
+end
 
-=====================================================================
-==================== READ THIS BEFORE CONTINUING ====================
-=====================================================================
-========                                    .-----.          ========
-========         .----------------------.   | === |          ========
-========         |.-""""""""""""""""""-.|   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||   KICKSTART.NVIM   ||   |-----|          ========
-========         ||                    ||   | === |          ========
-========         ||                    ||   |-----|          ========
-========         ||:Tutor              ||   |:::::|          ========
-========         |'-..................-'|   |____o|          ========
-========         `"")----------------(""`   ___________      ========
-========        /::::::::::|  |::::::::::\  \ no mouse \     ========
-========       /:::========|  |==hjkl==:::\  \ required \    ========
-========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
-========                                                     ========
-=====================================================================
-=====================================================================
-
-What is Kickstart?
-
-  Kickstart.nvim is *not* a distribution.
-
-  Kickstart.nvim is a starting point for your own configuration.
-    The goal is that you can read every line of code, top-to-bottom, understand
-    what your configuration is doing, and modify it to suit your needs.
-
-    Once you've done that, you can start exploring, configuring and tinkering to
-    make Neovim your own! That might mean leaving Kickstart just the way it is for a while
-    or immediately breaking it into modular pieces. It's up to you!
-
-    If you don't know anything about Lua, I recommend taking some time to read through
-    a guide. One possible example which will only take 10-15 minutes:
-      - https://learnxinyminutes.com/docs/lua/
-
-    After understanding a bit more about Lua, you can use `:help lua-guide` as a
-    reference for how Neovim integrates Lua.
-    - :help lua-guide
-    - (or HTML version): https://neovim.io/doc/user/lua-guide.html
-
-Kickstart Guide:
-
-  TODO: The very first thing you should do is to run the command `:Tutor` in Neovim.
-
-    If you don't know what this means, type the following:
-      - <escape key>
-      - :
-      - Tutor
-      - <enter key>
-
-    (If you already know the Neovim basics, you can skip this step.)
-
-  Once you've completed that, you can continue working through **AND READING** the rest
-  of the kickstart init.lua.
-
-  Next, run AND READ `:help`.
-    This will open up a help window with some basic information
-    about reading, navigating and searching the builtin help documentation.
-
-    This should be the first place you go to look when you're stuck or confused
-    with something. It's one of my favorite Neovim features.
-
-    MOST IMPORTANTLY, we provide a keymap "<space>sh" to [s]earch the [h]elp documentation,
-    which is very useful when you're not exactly sure of what you're looking for.
-
-  I have left several `:help X` comments throughout the init.lua
-    These are hints about where to find more information about the relevant settings,
-    plugins or Neovim features used in Kickstart.
-
-   NOTE: Look for lines like this
-
-    Throughout the file. These are for you, the reader, to help you understand what is happening.
-    Feel free to delete them once you know what you're doing, but they should serve as a guide
-    for when you are first encountering a few different constructs in your Neovim config.
-
-If you experience any errors while trying to install kickstart, run `:checkhealth` for more info.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now! :)
---]]
+-- Disabling netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+vim.o.fileformat = 'unix'
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
@@ -256,8 +185,8 @@ require('lazy').setup({
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
   --
+  { 'tpope/vim-abolish' },
   { 'mfussenegger/nvim-jdtls' },
-  { 'dstein64/vim-startuptime' },
   {
     'mfussenegger/nvim-dap',
     config = function()
@@ -291,6 +220,7 @@ require('lazy').setup({
   },
   { 'nvim-tree/nvim-tree.lua', opts = {
     view = { adaptive_size = true },
+    git = { enable = false },
   } },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
@@ -484,6 +414,8 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>dc', ':DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
       vim.keymap.set('n', '<leader>dm', ':lua require"dapui".toggle()<CR>', { desc = '[D]ebug [M]enu' })
       vim.keymap.set('n', '<leader>dq', ':DapTerminate<CR>', { desc = '[D]ebug Qui[T]' })
+      vim.keymap.set('n', '<leader>do', ":lua require'jdtls'.test_class()<CR>", { desc = '[D][O]ebug Test Class' })
+      vim.keymap.set('n', '<leader>dp', ":lua require'jdtls'.test_nearest_method()<CR>", { desc = '[D][P]ebug Nearest Method' })
       vim.keymap.set('n', '<leader>d<Up>', ':DapStepInto<CR>', { desc = '[D]ebug [Up] Step Into' })
       vim.keymap.set('n', '<leader>d<Right>', ':DapStepOver<CR>', { desc = '[D]ebug [Right] Step Over' })
       vim.keymap.set('n', '<leader>d<Down>', ':DapStepOut<CR>', { desc = '[D]ebug [Down] Step Out' })
@@ -677,6 +609,21 @@ require('lazy').setup({
         end,
       })
 
+      function leave_snippet()
+        if
+          ((vim.v.event.old_mode == 's' and vim.v.event.new_mode == 'n') or vim.v.event.old_mode == 'i')
+          and require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+          and not require('luasnip').session.jump_active
+        then
+          require('luasnip').unlink_current()
+        end
+      end
+
+      -- stop snippets when you leave to normal mode
+      vim.api.nvim_command [[
+    autocmd ModeChanged * lua leave_snippet()
+    ]]
+
       -- Jdtls Config
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'java',
@@ -712,7 +659,6 @@ require('lazy').setup({
             return diagnostic_message[diagnostic.severity]
           end,
         },
-        sql,
       }
 
       -- LSP servers and clients are able to communicate to each other what features they support.

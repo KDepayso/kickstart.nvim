@@ -87,6 +87,8 @@ function M:setup()
     init_options = {
       bundles = bundles,
     },
+
+    require('jdtls').setup_dap { hotcodereplace = 'auto' },
   }
 
   -- This starts a new client & server,
