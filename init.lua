@@ -1,10 +1,3 @@
-if vim.g.neovide then
-  vim.g.neovide_scroll_animation_length = 0
-  vim.g.neovide_position_animation_length = 0
-  vim.g.neovide_vfx_mode = ''
-  vim.g.neovide_cursor_animation_length = 0
-end
-
 -- Disabling netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -779,6 +772,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        markdown = { 'prettier' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --

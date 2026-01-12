@@ -1,12 +1,12 @@
 local M = {}
 function M:setup()
   local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-  local workspace_dir = 'C:/Dev/jdtls-data/' .. project_name
+  local workspace_dir = '/home/kdepayso/projects/jdtls-data/' .. project_name
 
   local bundles = {
-    vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
+    vim.fn.glob('/home/kdepayso/.local/share/nvim/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar', 1),
   }
-  vim.list_extend(bundles, vim.split(vim.fn.glob('C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/java-test/extension/server/*.jar', 1), '\n'))
+  vim.list_extend(bundles, vim.split(vim.fn.glob('/home/kdepayso/.local/share/nvim/mason/packages/java-test/extension/server/*.jar', 1), '\n'))
 
   local ignored_bundles = { 'com.microsoft.java.test.runner-jar-with-dependencies.jar', 'jacocoagent.jar' }
   local find = string.find
@@ -40,18 +40,18 @@ function M:setup()
       'java.base/java.util=ALL-UNNAMED',
       '--add-opens',
       'java.base/java.lang=ALL-UNNAMED',
-      '-javaagent:C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/jdtls/lombok.jar',
+      '-javaagent:/home/kdepayso/.local/share/nvim/mason/packages/jdtls/lombok.jar',
 
       -- 💀
       '-jar',
-      'C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251014-1222.jar',
+      '/home/kdepayso/.local/share/nvim/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.7.100.v20251111-0406.jar',
       -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                       ^^^^^^^^^^^^^^
       -- Must point to the                                                     Change this to
       -- eclipse.jdt.ls installation                                           the actual version
 
       -- 💀
       '-configuration',
-      'C:/Users/kdepayso/AppData/Local/nvim-data/mason/packages/jdtls/config_win',
+      '/home/kdepayso/.local/share/nvim/mason/packages/jdtls/config_linux',
       -- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        ^^^^^^
       -- Must point to the                      Change to one of `linux`, `win` or `mac`
       -- eclipse.jdt.ls installation            Depending on your system.
@@ -74,7 +74,20 @@ function M:setup()
     -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
     -- for a list of options
     settings = {
-      java = {},
+      java = {
+        configuration = {
+          runtimes = {
+            {
+              name = 'JavaSE-21',
+              path = 'usr/lib/jvm/java-21-openjdk/',
+            },
+            {
+              name = 'JavaSE-17',
+              path = 'usr/lib/jvm/java-17-openjdk/',
+            },
+          },
+        },
+      },
     },
 
     -- Language server `initializationOptions`
