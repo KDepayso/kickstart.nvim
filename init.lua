@@ -401,17 +401,17 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>n', ':NvimTreeOpen<CR>', { desc = '[][N]vimTree Open' })
 
       -- Nvim-Dap
-      vim.keymap.set('n', '<leader>dt', ':DapToggleBreakpoint<CR>', { desc = '[D]ebug [T]oggle Breakpoint' })
-      vim.keymap.set('n', '<leader>dp', ':DapClearBreakpoints<CR>', { desc = '[D]ebug Clear Break[P]oints' })
-      vim.keymap.set('n', '<leader>dn', ':DapNew<CR>', { desc = '[D]ebug [N]ew' })
-      vim.keymap.set('n', '<leader>dc', ':DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
-      vim.keymap.set('n', '<leader>dm', ':lua require"dapui".toggle()<CR>', { desc = '[D]ebug [M]enu' })
-      vim.keymap.set('n', '<leader>dq', ':DapTerminate<CR>', { desc = '[D]ebug Qui[T]' })
+      -- vim.keymap.set('n', '<leader>dt', ':DapToggleBreakpoint<CR>', { desc = '[D]ebug [T]oggle Breakpoint' })
+      -- vim.keymap.set('n', '<leader>dp', ':DapClearBreakpoints<CR>', { desc = '[D]ebug Clear Break[P]oints' })
+      -- vim.keymap.set('n', '<leader>dn', ':DapNew<CR>', { desc = '[D]ebug [N]ew' })
+      -- vim.keymap.set('n', '<leader>dc', ':DapContinue<CR>', { desc = '[D]ebug [C]ontinue' })
+      -- vim.keymap.set('n', '<leader>dm', ':lua require"dapui".toggle()<CR>', { desc = '[D]ebug [M]enu' })
+      -- vim.keymap.set('n', '<leader>dq', ':DapTerminate<CR>', { desc = '[D]ebug Qui[T]' })
       vim.keymap.set('n', '<leader>do', ":lua require'jdtls'.test_class()<CR>", { desc = '[D][O]ebug Test Class' })
       vim.keymap.set('n', '<leader>dp', ":lua require'jdtls'.test_nearest_method()<CR>", { desc = '[D][P]ebug Nearest Method' })
-      vim.keymap.set('n', '<leader>d<Up>', ':DapStepInto<CR>', { desc = '[D]ebug [Up] Step Into' })
-      vim.keymap.set('n', '<leader>d<Right>', ':DapStepOver<CR>', { desc = '[D]ebug [Right] Step Over' })
-      vim.keymap.set('n', '<leader>d<Down>', ':DapStepOut<CR>', { desc = '[D]ebug [Down] Step Out' })
+      -- vim.keymap.set('n', '<leader>d<Up>', ':DapStepInto<CR>', { desc = '[D]ebug [Up] Step Into' })
+      -- vim.keymap.set('n', '<leader>d<Right>', ':DapStepOver<CR>', { desc = '[D]ebug [Right] Step Over' })
+      -- vim.keymap.set('n', '<leader>d<Down>', ':DapStepOut<CR>', { desc = '[D]ebug [Down] Step Out' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()
@@ -983,7 +983,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',

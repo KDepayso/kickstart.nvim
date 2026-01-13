@@ -1,3 +1,6 @@
+local lombok_jar = vim.fn.expand '$MASON/share/jdtls/lombok.jar'
+local lombok_arg = string.format('--jvm-arg=-javaagent:%s', lombok_jar)
+
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local workspace_dir = '/home/kdepayso/projects/jdtls-data/' .. project_name
 
@@ -22,6 +25,7 @@ local config = {
     'jdtls',
     '-data',
     workspace_dir,
+    lombok_arg,
   },
 
   root_dir = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' }),
