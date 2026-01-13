@@ -618,12 +618,12 @@ require('lazy').setup({
     ]]
 
       -- Jdtls Config
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'java',
-        callback = function(args)
-          require('custom.jdtls.jdtls_setup').setup()
-        end,
-      })
+      -- vim.api.nvim_create_autocmd('FileType', {
+      --   pattern = 'java',
+      --   callback = function(args)
+      --     require('custom.jdtls.jdtls_setup').setup()
+      --   end,
+      -- })
 
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
