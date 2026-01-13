@@ -180,41 +180,6 @@ require('lazy').setup({
   --
   { 'tpope/vim-abolish' },
   { 'mfussenegger/nvim-jdtls' },
-  {
-    'mfussenegger/nvim-dap',
-    config = function()
-      local dap = require 'dap'
-      local dapui = require 'dapui'
-
-      dapui.setup()
-
-      dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-      end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
-    end,
-  },
-  { 'nvim-neotest/nvim-nio' },
-  {
-    'rcarriga/nvim-dap-ui',
-    config = function()
-      require('lazydev').setup {
-        library = { 'nvim-dap-ui' },
-      }
-    end,
-  },
-  { 'nvim-tree/nvim-tree.lua', opts = {
-    view = { adaptive_size = true },
-    git = { enable = false },
-  } },
 
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
@@ -398,7 +363,7 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       -- NvimTree
-      vim.keymap.set('n', '<leader>n', ':NvimTreeOpen<CR>', { desc = '[][N]vimTree Open' })
+      --vim.keymap.set('n', '<leader>n', ':NvimTreeOpen<CR>', { desc = '[][N]vimTree Open' })
 
       -- Nvim-Dap
       -- vim.keymap.set('n', '<leader>dt', ':DapToggleBreakpoint<CR>', { desc = '[D]ebug [T]oggle Breakpoint' })
@@ -616,14 +581,6 @@ require('lazy').setup({
       vim.api.nvim_command [[
     autocmd ModeChanged * lua leave_snippet()
     ]]
-
-      -- Jdtls Config
-      -- vim.api.nvim_create_autocmd('FileType', {
-      --   pattern = 'java',
-      --   callback = function(args)
-      --     require('custom.jdtls.jdtls_setup').setup()
-      --   end,
-      -- })
 
       -- Diagnostic Config
       -- See :help vim.diagnostic.Opts
@@ -986,8 +943,8 @@ require('lazy').setup({
   require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
